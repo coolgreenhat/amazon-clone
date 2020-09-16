@@ -14,7 +14,6 @@ const reducer = (state, action) => {
         ...state,
       basket: [...state.basket, action.item]
      }
-      break;
     case 'REMOVE_FROM_BASKET':
       //  cloned the basket
       let newBasket = [...state.basket];
@@ -36,6 +35,11 @@ const reducer = (state, action) => {
         basket: newBasket
       };
 
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user
+      }
     default:
       return state;
   }
