@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(process.env.REACT_APP_STRIPE);
+const stripe = require("stripe")(process.env.REACT_APP_SECRET_KEY);
 
 //App Config
 const app = express();
@@ -13,12 +13,13 @@ app.use(express.json());
 
 //API Routes
 app.get('/', (request, response) => response.status(200).send("Hello World"))
-app.post('/payments/create', async(request, response) => {
+
+app.post('/payments/create', async (request, response) => {
   const total = request.query.total;
   
   console.log('Payment Request Received for ₹ ', total)
   
-  const paymentIntent = await stripe.paymentIntent.create({
+  const paymentIntent = await stripe.paymentIntents.create({
     amount: total,  // subunits of currency
     currency: "inr",
   });
